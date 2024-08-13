@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #fff;
+            border-bottom: 1px solid #ccc;
+            color: #333;
+            padding: 15px 20px;
+            text-align: left;
+            font-size: 24px;
+            position: relative;
+            height: 65px;
+            overflow: hidden;
+            z-index: 2;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container {
+            text-align: right;
+            position: absolute;
+            bottom: 50%;
+            right: 20px;
+            transform: translateY(50%);
+            z-index: 3;
+        }
+
+        .help-button,
+        .my-bookings-button,
+        .logout-button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 15px 20px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-right: 10px;
+            display: inline-block; /* Added */
+        }
+
+        #craft-your-trip {
+            font-family: 'Georgia', serif;
+            font-size: 36px;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+        }
+
+        .action-bar {
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0; /* Increased height */
+            position: relative;
+            z-index: 1;
+        }
+
+        .action-button {
+            background-color: #fff;
+            color: #3498db;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+            margin: 0 10px;
+            cursor: pointer;
+            display: inline-block; /* Added */
+        }
+
+        .icon-label {
+            font-size: 14px;
+            margin-top: 5px; /* Adjusted margin */
+            display: inline-block; /* Added */
+        }
+
+        .filters-container {
+            display: none;
+            background-color: #fff;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            text-align: left; /* Align text to the left */
+        }
+
+        .filter-label {
+            display: inline-block;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .filter-dropdown,
+        .filter-checkbox,
+        .filter-datepicker {
+            margin-bottom: 15px;
+            display: inline-block; /* Display filters in a horizontal manner */
+            margin-right: 15px; /* Add space between filters */
+        }
+
+        .apply-filters {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            float: right; /* Align to the right */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            display: block; /* Initially hide the table */
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #4CAF50; /* Green background color for header cells */
+            color: white; /* White text color for header cells */
+        }
+        
+    </style>
+    <title>Craft Your Trip - v15</title>
+</head>
+<body>
+
+    <header>
+        <div id="craft-your-trip">Craft Your Trip</div>
+        <div class="button-container">
+            <button class="help-button">Help</button>
+            <button class="my-bookings-button">My Bookings</button>
+            <button class="logout-button">Logout</button>
+        </div>
+    </header>
+
+    <div class="action-bar">
+        <button class="action-button" onclick="showFilters('flights')"><i class="fas fa-plane"></i></button>
+        <div class="icon-label">Flight</div>
+        <button class="action-button" onclick="showFilters('buses')"><i class="fas fa-bus"></i></button>
+        <div class="icon-label">Bus</div>
+        <button class="action-button" onclick="showFilters('hotels')"><i class="fas fa-hotel"></i></button>
+        <div class="icon-label">Hotels</div>
+        <button class="action-button" onclick="showFilters('packages')"><i class="fas fa-suitcase"></i></button>
+        <div class="icon-label">Packages</div>
+    </div>
+
+    <!-- Flight Filters -->
+    <form action="#" method="post">
+    <div class="filters-container" id="flightsFiltersContainer" style="display: none;">
+        <label class="filter-label" for="airlineDropdown">Airline:</label>
+        <select class="filter-dropdown" id="airlineDropdown">
+            <option value="delta">Delta</option>
+            <option value="united">United</option>
+            <option value="american">American</option>
+        </select>
+
+        <label class="filter-label">Direct Flight:</label>
+        <input type="checkbox" class="filter-checkbox" id="directFlightCheckbox"> <span>Yes</span>
+
+        <label class="filter-label" for="departureDate">Departure Date:</label>
+        <input type="date" class="filter-datepicker" id="departureDate">
+
+        <button type="submit" class="apply-filters">Apply Filters</button>
+    </div>
+    </form>
+
+    <!-- Bus Filters -->
+    <form action="#" method="post">
+    <div class="filters-container" id="busesFiltersContainer" style="display: none;">
+        <label class="filter-label" for="busOperatorDropdown">Bus Operator:</label>
+        <select class="filter-dropdown" id="busOperatorDropdown">
+            <option value="greyhound">Greyhound</option>
+            <option value="megabus">Megabus</option>
+            <option value="boltbus">BoltBus</option>
+        </select>
+
+        <label class="filter-label" for="departureCityDropdown">Departure City:</label>
+        <select class="filter-dropdown" id="departureCityDropdown">
+            <option value="cityA">City A</option>
+            <option value="cityB">City B</option>
+            <option value="cityC">City C</option>
+        </select>
+
+        <button type="submit" class="apply-filters">Apply Filters</button>
+    </div>
+    </form>
+
+    <!-- Hotel Filters -->
+    <form action="#" method="post">
+    <div class="filters-container" id="hotelsFiltersContainer" style="display: none;">
+        <label class="filter-label" for="hotelRatingDropdown">Rating:</label>
+        <select class="filter-dropdown" id="hotelRatingDropdown">
+            <option value="1">1 star</option>
+            <option value="2">2 stars</option>
+            <option value="3">3 stars</option>
+            <option value="4">4 stars</option>
+            <option value="5">5 stars</option>
+        </select>
+
+        <label class="filter-label" for="locationDropdown">Location:</label>
+        <select class="filter-dropdown" id="locationDropdown">
+            <option value="city1">City 1</option>
+            <option value="city2">City 2</option>
+            <option value="city3">City 3</option>
+        </select>
+
+        <label class="filter-label">Food:</label>
+        <input type="checkbox" class="filter-checkbox" id="foodcheckbox"> <span>Yes</span>
+        
+        <label class="filter-label" for="roomTypeDropdown">Room Type:</label>
+        <select class="filter-dropdown" id="roomTypeDropdown">
+            <option value="single">Single</option>
+            <option value="double">Double</option>
+            <option value="suite">Suite</option>
+            <!-- Add more room types as needed -->
+        </select>
+
+        <label class="filter-label" for="datePicker">Check-in Date:</label>
+        <input type="date" class="filter-datepicker" id="datePicker">
+
+        <label class="filter-label" for="toDate">Check-out Date:</label>
+        <input type="date" class="filter-datepicker" id="toDate">
+
+        <button type="submit" class="apply-filters">Apply Filters</button>
+    </div>
+    </form>
+
+    <!-- Package Filters -->
+    <form action="#" method="post">
+    <div class="filters-container" id="packagesFiltersContainer" style="display: none;">
+        <label class="filter-label" for="packageTypeDropdown">Package Type:</label>
+        <select class="filter-dropdown" id="packageTypeDropdown">
+            <option value="adventure">Adventure</option>
+            <option value="romantic">Romantic</option>
+            <option value="family">Family</option>
+        </select>
+
+        <label class="filter-label" for="packageDurationDropdown">Duration:</label>
+        <select class="filter-dropdown" id="packageDurationDropdown">
+            <option value="3">3 days</option>
+            <option value="7">7 days</option>
+            <option value="14">14 days</option>
+        </select>
+
+        <button type="submit" class="apply-filters">Apply Filters</button>
+    </div>
+    </form>
+
+    <table id="hotel-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Hotel Name</th>
+                <th>Booking Date</th>
+                <th>Number of Rooms</th>
+                <th>Room Type Price</th>
+                <th>From Date</th>
+                <th>To Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Add your hotel booking data here -->
+            <tr>
+                <td>1</td>
+                <td>Example Hotel</td>
+                <td>2023-01-01</td>
+                <td>2</td>
+                <td>$150</td>
+                <td>2023-02-01</td>
+                <td>2023-02-07</td>
+            </tr>
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+
+    <script>
+        function showFilters(selected) {
+            var flightsFiltersContainer = document.getElementById("flightsFiltersContainer");
+            var busesFiltersContainer = document.getElementById("busesFiltersContainer");
+            var hotelsFiltersContainer = document.getElementById("hotelsFiltersContainer");
+            var packagesFiltersContainer = document.getElementById("packagesFiltersContainer");
+
+            if (selected === 'flights') {
+                flightsFiltersContainer.style.display = "block";
+                busesFiltersContainer.style.display = "none";
+                hotelsFiltersContainer.style.display = "none";
+                packagesFiltersContainer.style.display = "none";
+            } else if (selected === 'buses') {
+                flightsFiltersContainer.style.display = "none";
+                busesFiltersContainer.style.display = "block";
+                hotelsFiltersContainer.style.display = "none";
+                packagesFiltersContainer.style.display = "none";
+            } else if (selected === 'hotels') {
+                flightsFiltersContainer.style.display = "none";
+                busesFiltersContainer.style.display = "none";
+                hotelsFiltersContainer.style.display = "block";
+                packagesFiltersContainer.style.display = "none";
+            } else if (selected === 'packages') {
+                flightsFiltersContainer.style.display = "none";
+                busesFiltersContainer.style.display = "none";
+                hotelsFiltersContainer.style.display = "none";
+                packagesFiltersContainer.style.display = "block";
+            } else {
+                // Hide all filters if none selected
+                flightsFiltersContainer.style.display = "none";
+                busesFiltersContainer.style.display = "none";
+                hotelsFiltersContainer.style.display = "none";
+                packagesFiltersContainer.style.display = "none";
+            }
+
+            // Clear previous details boxes
+            document.getElementById("flightDetailsContainer").innerHTML = '';
+            document.getElementById("busDetailsContainer").innerHTML = '';
+            document.getElementById("hotelDetailsContainer").innerHTML = '';
+            document.getElementById("packageDetailsContainer").innerHTML = '';
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'MyBookings.css' %}">
+    <title>My Bookings - v13.0</title>
+</head>
+<body>
+
+    <header>
+        <div id="craft-your-trip">My Bookings</div>
+        <div class="button-container">
+            <a href="{% url 'Main' %}"><button class="logout-button">Logout</button></a>
+        </div>
+    </header>
+
+    <div class="action-bar">
+        <button class="action-button" onclick="toggleTable('hotel')"><i class="fas fa-hotel"></i></button>
+        <div class="icon-label">Hotels</div>
+    </div>
+
+    <!-- Added table for hotel bookings -->
+    <table id="hotel-table">
+        <thead>
+            <tr>
+                <th>Hotel Name</th>
+                <th>Location</th>
+                <th>Food</th>
+                <th>No. of Rooms</th>
+                <th>Total Price</th>
+                <th>Booking Date</th>
+                <th>Check-in Date</th>
+                <th>Check-out Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in booking_data %}
+            <tr>
+                <td>{{ booking.0 }}</td>
+                <td>{{ booking.1 }}</td>
+                <td>{{ booking.2 }}</td>
+                <td>{{ booking.3 }}</td>
+                <td>₹{{ booking.4 }}</td>
+                <td>{{ booking.5 }}</td>
+                <td>{{ booking.6 }}</td>
+                <td>{{ booking.7 }}</td>
+                <td>
+                    <form method="post" action="{% url 'MyBookings' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="booking_id" value="{{ booking.8 }}">
+                        <button type="submit">Cancel</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <p id="cancelation" data-value="{{ cancelation }}" style="display: none;"></p>
+    <script>
+        function toggleTable(iconType) {
+            var hotelTable = document.getElementById('hotel-table');
+            if (iconType === 'hotel') {
+                hotelTable.style.display = hotelTable.style.display === 'none' ? 'table' : 'none';
+            }
+        }
+
+        window.onload = function() {
+            var cancelationElement = document.getElementById('cancelation');
+            var djangoError = cancelationElement.getAttribute('data-value');
+
+            if (djangoError === "True") {
+                alert("Cancellation is successful");
+            }
+        };
+    </script>
+</body>
+</html>

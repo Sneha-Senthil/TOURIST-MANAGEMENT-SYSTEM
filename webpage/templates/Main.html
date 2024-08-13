@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'Main.css' %}">
+    <title>Craft Your Trip</title>
+</head>
+<body>
+
+    <header>
+        <div id="craft-your-trip">Craft Your Trip</div>
+        <div class="button-container">
+            <a href="{% url 'Help' %}"><button class="help-button">Help</button></a>
+            <a href="{% url 'Login' %}"><button class="login-button">Login</button></a>
+        </div>
+    </header>
+
+    <div id="info-box">
+        <p><strong>Welcome to our Tourism Management System!</strong></p>
+        <p>We are delighted to welcome you to our state-of-the-art Tourism Management System, where your travel experiences are about to reach new heights. Whether you're a seasoned explorer or planning your first adventure, our platform is designed to make your journey seamless, memorable, and filled with discovery.</p>
+        <p><strong>What to Expect:</strong></p>
+        <ul>
+            <li><strong>Personalized Travel Plans:</strong> Tailor your travel itinerary to match your unique preferences. Explore a wide array of destinations, activities, and accommodations to create a personalized travel plan that suits your tastes.</li>
+            <li><strong>Real-time Updates:</strong> Stay informed with real-time updates on weather conditions, local events, and travel advisories. Our system ensures that you have the latest information to make informed decisions throughout your journey.</li>
+            <li><strong>User-Friendly Interface:</strong> Our intuitive interface makes it easy for you to navigate and plan your trips effortlessly. From booking flights and accommodations to discovering hidden gems, we've streamlined the process for your convenience.</li>
+            <li><strong>Community Engagement:</strong> Connect with fellow travelers, share your experiences, and discover valuable insights from the travel community. Engage in discussions, exchange tips, and make new friends who share your passion for exploration.</li>
+            <li><strong>Customer Support:</strong> Our dedicated support team is here to assist you around the clock. Have questions, need assistance, or just want to share your travel stories? We're here to make your experience enjoyable and stress-free.</li>
+        </ul>
+        <p><strong>Get Started:</strong> Sign up now to embark on a journey of a lifetime. Create an account, start planning your trips, and unlock a world of possibilities with our Tourism Management System.</p>
+        <p>Thank you for choosing us as your travel companion. Let the adventures begin!</p>
+    </div>
+
+    <div id="background-image"></div>
+
+</body>
+</html>

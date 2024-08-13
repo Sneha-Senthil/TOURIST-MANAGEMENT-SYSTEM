@@ -1,0 +1,273 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'Home.css' %}">
+    <title>Craft Your Trip - v15</title>
+</head>
+<body>
+
+    <header>
+        <div id="craft-your-trip">Craft Your Trip</div>
+        <div class="button-container">
+            <a href="{% url 'Help' %}"><button class="help-button">Help</button></a>
+            <a href="{% url 'MyBookings' %}"><button class="my-bookings-button">My Bookings</button></a>
+            <a href="{% url 'Main' %}"><button class="logout-button">Logout</button></a>
+        </div>
+    </header>
+
+    <div class="action-bar">
+        <button class="action-button" onclick="showFilters('hotels')"><i class="fas fa-hotel"></i></button>
+        <div class="icon-label">Hotels</div>
+    </div>
+
+
+<form action="{% url 'Home' %}" method="post">
+    {% csrf_token %}
+    <div class="filters-container" id="flightsFiltersContainer" style="display: none;">
+        <input type="hidden" name="icon" value="flight">
+        <label class="filter-label" for="airlineDropdown">Airline:</label>
+        <select class="filter-dropdown" id="airlineDropdown" name="airline">
+            <option value="delta">Delta</option>
+            <option value="united">United</option>
+            <option value="american">American</option>
+        </select>
+
+        <label class="filter-label">Direct Flight:</label>
+        <input type="checkbox" class="filter-checkbox" id="directFlightCheckbox" name="direct_flight"> <span>Yes</span>
+
+        <label class="filter-label" for="departureDate">Departure Date:</label>
+        <input type="date" class="filter-datepicker" id="departureDate" name="departure_date">
+
+        <input type="submit" class="apply-filters" value="Apply Filters">
+    </div>
+</form>
+
+<form action="{% url 'Home' %}" method="post">
+    {% csrf_token %}
+    <div class="filters-container" id="busesFiltersContainer" style="display: none;">
+        <input type="hidden" name="icon" value="bus">
+        <label class="filter-label" for="busOperatorDropdown">Bus Operator:</label>
+        <select class="filter-dropdown" id="busOperatorDropdown" name="bus_operator">
+            <option value="greyhound">Greyhound</option>
+            <option value="megabus">Megabus</option>
+            <option value="boltbus">BoltBus</option>
+        </select>
+
+        <label class="filter-label" for="departureCityDropdown">Departure City:</label>
+        <select class="filter-dropdown" id="departureCityDropdown" name="departure_city">
+            <option value="cityA">City A</option>
+            <option value="cityB">City B</option>
+            <option value="cityC">City C</option>
+        </select>
+        <input type="submit" class="apply-filters" value="Apply Filters">
+    </div>
+</form>
+
+<!-- Hotel Filters -->
+<form action="{% url 'Home' %}" method="post">
+    {% csrf_token %}
+    <div class="filters-container" id="hotelsFiltersContainer" style="display: none;">
+        <input type="hidden" name="icon" value="hotel">
+        <label class="filter-label" for="hotelRatingDropdown">Rating:</label>
+        <select class="filter-dropdown" id="hotelRatingDropdown" name="hotel_rating">
+            <option value="1">1 star</option>
+            <option value="2">2 stars</option>
+            <option value="3">3 stars</option>
+            <option value="4">4 stars</option>
+            <option value="5">5 stars</option>
+        </select>
+
+        <label class="filter-label" for="locationDropdown">Location:</label>
+        <select class="filter-dropdown" id="locationDropdown" name="hotel_location">
+            <option value="Chennai">Chennai</option>
+            <option value="Ooty">Ooty</option>
+            <option value="Mahabalipuram">Mahabalipuram</option>
+            <option value="Coimbatore">Coimbatore</option>
+            <option value="Kodaikanal">Kodaikanal</option>
+            <option value="Madurai">Madurai</option>
+            <option value="Yercaud">Yercaud</option>
+            <option value="Rameswaram">Rameswaram</option>
+        </select>
+
+        <label class="filter-label">Food:</label>
+        <input type="checkbox" class="filter-checkbox" id="foodcheckbox" name="food"> <span>Yes</span>
+
+        <label class="filter-label" for="roomTypeDropdown">Room Type:</label>
+        <select class="filter-dropdown" id="roomTypeDropdown" name="room_type">
+            <option value="2_br">2 bedroom</option>
+            <option value="3_br">3 bedroom</option>
+            <!-- Add more room types as needed -->
+        </select>
+
+        <label class="filter-label" for="roomCount">Rooms:</label>
+        <input type="number" class="filter-number" id="roomCount" name="room_count" min="1">
+
+        <label class="filter-label" for="datePicker">Check-in Date:</label>
+        <input type="date" class="filter-datepicker" id="datePicker" name="checkin_date">
+
+        <label class="filter-label" for="toDate">Check-out Date:</label>
+        <input type="date" class="filter-datepicker" id="toDate" name="checkout_date">
+
+        <input type="submit" class="apply-filters" value="Apply Filters">
+    </div>
+</form>
+
+<form action="{% url 'Home' %}" method="post">
+    {% csrf_token %}
+    <div class="filters-container" id="packagesFiltersContainer" style="display: none;">
+        <input type="hidden" name="icon" value="package">
+        <label class="filter-label" for="packageTypeDropdown">Package Type:</label>
+        <select class="filter-dropdown" id="packageTypeDropdown" name="package_type">
+            <option value="adventure">Adventure</option>
+            <option value="romantic">Romantic</option>
+            <option value="family">Family</option>
+        </select>
+
+        <label class="filter-label" for="packageDurationDropdown">Duration:</label>
+        <select class="filter-dropdown" id="packageDurationDropdown" name="package_duration">
+            <option value="3">3 days</option>
+            <option value="7">7 days</option>
+            <option value="14">14 days</option>
+        </select>
+
+        <input type="submit" class="apply-filters" value="Apply Filters">
+    </div>
+</form>
+
+<br><br><br>
+    <table id="table">
+        <thead>
+            <tr>
+                {% for header in table_header %}
+                    <th>{{ header }}</th>
+                {% endfor %}
+            </tr> 
+        </thead>
+        <tbody>
+            <!-- Add your hotel booking data here -->
+            {% for tup in table_data %}
+            <tr>
+                {% for data in tup|slice:"2:" %}
+                    <td>{{ data }}</td>
+                {% endfor %}
+                    <td><button class="book-button" onclick="openModal('{{tup.1}}', '{{tup.0|escapejs}}')">Book</button></td>
+            </tr>
+            {% endfor %}
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+
+    {% if payment %}
+    <div id="myModal" class="modal">
+        <div class="modal-content" style="display: block;">
+            <p id="modalText"></p>
+            <p>Payment successfull !</p>
+            <button class="close-button" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Modal for showing up -->
+    <div id="myModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <p id="modalText"></p>
+            <form id="paymentForm" style="display: none;" action="{% url 'Home' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" id="hotelNameInput" name="hotelId" value="">
+            </form>
+            <button class="pay-button" type="submit" form="paymentForm">Pay</button>
+            <button class="close-button" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <div id="blurBackground" class="blur-background"></div>
+
+    <script>
+        function showFilters(selected) {
+            var flightsFiltersContainer = document.getElementById("flightsFiltersContainer");
+            var busesFiltersContainer = document.getElementById("busesFiltersContainer");
+            var hotelsFiltersContainer = document.getElementById("hotelsFiltersContainer");
+            var packagesFiltersContainer = document.getElementById("packagesFiltersContainer");
+
+            if (selected === 'flights') {
+                flightsFiltersContainer.style.display = "block";
+                busesFiltersContainer.style.display = "none";
+                hotelsFiltersContainer.style.display = "none";
+                packagesFiltersContainer.style.display = "none";
+            } else if (selected === 'buses') {
+                flightsFiltersContainer.style.display = "none";
+                busesFiltersContainer.style.display = "block";
+                hotelsFiltersContainer.style.display = "none";
+                packagesFiltersContainer.style.display = "none";
+            } else if (selected === 'hotels') {
+                flightsFiltersContainer.style.display = "none";
+                busesFiltersContainer.style.display = "none";
+                hotelsFiltersContainer.style.display = "block";
+                packagesFiltersContainer.style.display = "none";
+            } else if (selected === 'packages') {
+                flightsFiltersContainer.style.display = "none";
+                busesFiltersContainer.style.display = "none";
+                hotelsFiltersContainer.style.display = "none";
+                packagesFiltersContainer.style.display = "block";
+            } else {
+                // Hide all filters if none selected
+                flightsFiltersContainer.style.display = "none";
+                busesFiltersContainer.style.display = "none";
+                hotelsFiltersContainer.style.display = "none";
+                packagesFiltersContainer.style.display = "none";
+            }
+
+            // Clear previous details boxes
+            document.getElementById("flightDetailsContainer").innerHTML = '';
+            document.getElementById("busDetailsContainer").innerHTML = '';
+            document.getElementById("hotelDetailsContainer").innerHTML = '';
+            document.getElementById("packageDetailsContainer").innerHTML = '';
+        }
+
+        function openModal(hotelId, hotelInfo) {
+            var modal = document.getElementById('myModal');
+            var modalText = document.getElementById('modalText');
+            var blurBackground = document.getElementById('blurBackground');
+            var payButton = document.querySelector('.pay-button');
+            var bookButton = document.querySelector('.book-button');
+            var hotelNameInput = document.getElementById('hotelNameInput');
+            var paymentForm = document.getElementById('paymentForm');
+
+            console.log('Hotel ID:', hotelId);
+            console.log('Hotel Info:', hotelInfo);
+    
+            hotelNameInput.value = hotelId;
+            payButton.style.display = 'inline-block';
+            modalText.innerHTML = '<pre>' + hotelInfo + '</pre>';
+            blurBackground.style.display = 'block';
+            modal.style.display = 'flex';
+            paymentForm.style.display = 'block';
+    
+            document.body.style.overflow = 'hidden'; // Disable scrolling on the background
+        }
+    
+        function closeModal() {
+            var modal = document.getElementById('myModal');
+            var blurBackground = document.getElementById('blurBackground');
+            var bookButton = document.querySelector('.book-button');
+            var paymentForm = document.getElementById('paymentForm');
+    
+            modal.style.display = 'none';
+            blurBackground.style.display = 'none';
+    
+            // Show the Book button for the next hotel
+            bookButton.style.display = 'inline-block';
+            paymentForm.style.display = 'none';
+    
+            document.body.style.overflow = 'auto'; // Enable scrolling on the background
+        }
+    </script>
+    
+
+
+</body>
+</html>

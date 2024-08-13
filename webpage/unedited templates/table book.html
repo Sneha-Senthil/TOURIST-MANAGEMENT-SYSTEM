@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Table with Modal</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fefefe;
+      padding: 20px;
+      border: 2px solid #ccc;
+      text-align: center;
+      z-index: 1;
+      width: 40%;
+      height: 65%;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      position: relative;
+    }
+
+    .pay-button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .book-button {
+      background-color: #3498db; /* Change the color to blue */
+      color: white;
+      border: none;
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .close-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .blur-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 0;
+      backdrop-filter: blur(10px);
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Rating</th>
+      <th>Location</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Hotel 1</td>
+      <td>4.2</td>
+      <td>Mahabalipuram</td>
+      <td><button class="book-button" onclick="openModal('Hotel 1')">Book</button></td>
+    </tr>
+    <tr>
+      <td>Hotel 2</td>
+      <td>3.8</td>
+      <td>Ooty</td>
+      <td><button class="book-button" onclick="openModal('Hotel 2')">Book</button></td>
+    </tr>
+    <!-- Add more table rows as needed -->
+  </tbody>
+</table>
+
+<div id="myModal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <p id="modalText"></p>
+    <button class="pay-button" onclick="pay()">Pay</button>
+    <button class="close-button" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<div id="blurBackground" class="blur-background"></div>
+
+<script>
+
+  function openModal(hotelName) {
+    var modal = document.getElementById('myModal');
+    var modalText = document.getElementById('modalText');
+    var blurBackground = document.getElementById('blurBackground');
+    var payButton = document.querySelector('.pay-button');
+    var bookButton = document.querySelector('.book-button');
+
+    
+    payButton.style.display = 'inline-block';
+    modalText.innerHTML = 'Information for ' + hotelName;
+    blurBackground.style.display = 'block';
+    modal.style.display = 'flex';
+
+    document.body.style.overflow = 'hidden'; // Disable scrolling on the background
+  }
+
+  function closeModal() {
+    var modal = document.getElementById('myModal');
+    var blurBackground = document.getElementById('blurBackground');
+    var payButton = document.querySelector('.pay-button');
+    var bookButton = document.querySelector('.book-button');
+
+    modal.style.display = 'none';
+    blurBackground.style.display = 'none';
+
+    // Show the Book button for the next hotel
+    bookButton.style.display = 'inline-block';
+
+    document.body.style.overflow = 'auto'; // Enable scrolling on the background
+  }
+
+  function pay() {
+    var modalText = document.getElementById('modalText');
+    var payButton = document.querySelector('.pay-button');
+    modalText.innerHTML = 'Payment done successfully!';
+
+    // Hide the Pay button within the modal
+    payButton.style.display = 'none';
+  }
+</script>
+
+</body>
+</html>
